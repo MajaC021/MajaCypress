@@ -9,7 +9,7 @@ describe("login test", () => {
       // jos jedan nacin za get-ovanje elementa
       // cy.get('a[href="/login"]').click();
       cy.get('.nav-link').eq(1).click();
-      cy.get('#email').type('majacveticanin90@gmail.com.com');
+      cy.get('#email').type('majacveticanin90@gmail.com');
       cy.get('#password').type('Majovita1990');
       cy.get('button').click();
 

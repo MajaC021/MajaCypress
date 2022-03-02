@@ -1,4 +1,8 @@
 {
-"baseUrl" : "https://gallery-app.vivifyideas.com/"
-
+"baseUrl" : "https://gallery-app.vivifyideas.com/",
+"password" : "Majovita1990",
+"confirmPassword" : "Majovita1990",
+"email" : "majacveticanin90@gmail.com",
+"firstName": "maja",
+"lastName": "majaMaja"
 }
