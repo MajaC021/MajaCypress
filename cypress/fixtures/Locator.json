@@ -1,0 +1,13 @@
+{
+ 
+"Register": {
+    "firstName":"#first-name",
+    "lastName":"#last-name",
+    "emailField": "#email",
+    "passwordField": "#password",
+    "submitBtn": "button",
+    "passwordConfirmation": "#password-confirmation",
+    "checkBox": ".form-check-input"
+}
+
+}

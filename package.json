@@ -1,14 +1,27 @@
 {
   "name": "cypress-automation1",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/cypress open"
+    "test": "cypress open"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^9.5.0"
+    "@faker-js/faker": "^6.0.0-alpha.7",
+    "cypress": "^9.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MajaC021/MajaCypress.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/MajaC021/MajaCypress/issues"
+  },
+  "homepage": "https://github.com/MajaC021/MajaCypress#readme",
+  "description": "",
+  "dependencies": {
+    "faker": "^6.6.6"
   }
 }
