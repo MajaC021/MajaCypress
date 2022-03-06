@@ -74,15 +74,6 @@ export default class RegisterPage {
         this.checkBox.type(checkBox)
     }
 
-    registerUserInvalidEmailDomen(firstName, lastName, email, password, passwordConfirmation, checkBox) {
-        this.firstName.type(firstName)
-        this.lastName.type(lastName)
-        this.email.type(email)
-        this.password.type(password)
-        this.passwordConfirmation.type(passwordConfirmation)
-        this.checkBox.type(checkBox)
-    }
-
     registerValid(firstName, lastName, email, password, passwordConfirmation, checkBox) {
         this.firstName.type(firstName)
         this.lastName.type(lastName)
