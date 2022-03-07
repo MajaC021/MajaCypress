@@ -10,11 +10,14 @@ describe("login test", () => {
       // cy.get('a[href="/login"]').click();
       cy.get('.nav-link').eq(1).click();
       cy.get('#email').type('majacveticanin90@gmail.com');
-      cy.get('#password').type('Majovita1990');
+      cy.get('#password').type('jjjj');
       cy.get('button').click();
 
+      cy.get('p').should('have.text', 'Bad Credentials')
+      .and('have.css', 'color', 'rgb(114, 28, 36)')
+      .and('have.css', 'border-color', 'rgb(245, 198, 203)')
     });
-    it('logout', () => {
+    xit('logout', () => {
 
       // logout
       cy.get('.nav-link').should('have.length', 3);
