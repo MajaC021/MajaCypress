@@ -2,7 +2,7 @@
 import { allGalleriesPage } from '../page_objects/allGalleriesPOM';
 const { faker } = require('@faker-js/faker');
 
-describe("Registration test", () => {
+describe("All Galeries test", () => {
 
   let userData = {
     randomName: faker.name.firstName(),
