@@ -15,18 +15,18 @@ describe("All Galeries test", () => {
     cy.url().should('contain', '/')
   });
 
-  it.only("Search gallery", () => {
-
+  it("Search gallery", () => {
     allGalleriesPage.search('Global Mobility Administrator')
-    
-    cy.get('h2').then((el) => {
-      expect({ a: 'Global Mobility Administrator' }).to.eql({ a: 'Global Mobility Administrator' })
-    })
+    var fromSearch = allGalleriesPage.searchGallery.should('be.visible').invoke('val').should('not.be.empty', 'Global Mobility Administrator');
+    fromSearch.should('contain', 'Global Mobility Administrator')
 
-    cy.get('p').then((el) => {
-      expect({ a: 'marko pzs' }).to.eql({ a: 'marko pzs' })
+    cy.get('h2').should(($h2) => {
+      expect($h2.first()).to.contain('Global Mobility Administrator')  
     })
-  });
+    cy.get('p').should(($p) => {
+      expect($p.first()).to.contain('marko pzs')
+    })
+  })
   it("Pagination Check", () => {
 
     cy.get('.cell').should('have.length', 10)
