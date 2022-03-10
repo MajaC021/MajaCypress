@@ -15,14 +15,25 @@ describe("All Galeries test", () => {
     cy.url().should('contain', '/')
   });
 
-it.only("Search gallery", () => {
+  it.only("Search gallery", () => {
 
-    var fromSearch = allGalleriesPage.search('Global Mobility Administrator')   
+    allGalleriesPage.search('Global Mobility Administrator')
+    
     cy.get('h2').then((el) => {
-      expect(el).contain('Global Mobility Administrator')
+      expect({ a: 'Global Mobility Administrator' }).to.eql({ a: 'Global Mobility Administrator' })
     })
+
     cy.get('p').then((el) => {
-      expect(el).contain('marko pzs')
+      expect({ a: 'marko pzs' }).to.eql({ a: 'marko pzs' })
     })
-});
+  });
+  it("Pagination Check", () => {
+
+    cy.get('.cell').should('have.length', 10)
+  });
+  it("Load button Check", () => {
+
+    allGalleriesPage.loadBtn.click();
+    cy.get('.cell').should('have.length', 20)
+  });
 })

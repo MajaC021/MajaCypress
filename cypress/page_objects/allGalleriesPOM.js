@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-export default class AllGalleriesPage{
+export default class AllGalleriesPage {
 
     get galeryAppButton() { return cy.get('.nav-link') }
     get allGalleriesButton() { return cy.get('.nav-link').eq(1) }
@@ -12,14 +12,11 @@ export default class AllGalleriesPage{
     get loadBtn() { return cy.get('.btn-custom') }
 
 
-search(searchGallery){
+    search(searchGallery) {
 
-this.searchGallery.type(searchGallery)
-allGalleriesPage.filterBtn.click();
-}
-
-
-
+        this.searchGallery.type(searchGallery)
+        allGalleriesPage.filterBtn.click();
+    }
 }
 export const allGalleriesPage = new AllGalleriesPage();
 
