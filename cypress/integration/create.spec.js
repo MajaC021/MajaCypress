@@ -12,13 +12,8 @@ describe("Create test", () => {
     randomPassword: faker.internet.password()
   }
   beforeEach("visit Login page", () => {
-    cy.visit("/Login");
-    cy.get('#email').type('majacveticanin90@gmail.com');
-    cy.get('#password').type('Majovita1990');
-    cy.get('button').click();
-    cy.wait(1000)
-    cy.visit("/Create");
-    cy.url().should('contain', '/Create')
+    cy.loginFromBackend()
+    cy.visit("/");
   });
 
    it("Add new image without fill input", () => {
@@ -33,7 +28,6 @@ describe("Create test", () => {
   })
 
   it("Create gallery", () => {
-    cy.visit("/Create");
     createPage.createImage(userData.randomName, 'd,d,', userData.randomImageAbstract)
     createPage.submit.click();
     cy.visit("/");
@@ -42,23 +36,27 @@ describe("Create test", () => {
 
   })
   it("Add image", () => {
+    cy.visit("/Create");
+    cy.intercept({
+      method: "POST",
+      url: "https://gallery-api.vivifyideas.com/api/galleries"
+    }).as('createGallery')
+
     createPage.addNewImage(userData.randomName, 'd,d,', userData.randomImageAbstract, userData.randomImageFashion)
 
-    cy.url().should('contain', '/')
-    cy.visit("/my-galleries");
-    cy.url().should('contain', '/my-galleries')
+    cy.wait('@createGallery').then((interceptObj) => {
+    console.log("obj", interceptObj)
+    expect(interceptObj.request.body.images[0]).eq(userData.randomImageAbstract)
+    expect(interceptObj.request.body.images[1]).eq(userData.randomImageFashion)
+    });
 
-    cy.wait(1000);
-    cy.get('h1').then((el) => {
-      expect(el).contain('My Galleries')
-  })
-  cy.get('.container').find('.grid').find('.cell').find('img').then((list) => 
-     Cypress._.map(list, (o) => Cypress._.pick(o, 'src')),
-     ).should('deep.include', {src: userData.randomImageAbstract})
-  
-     cy.get('.container').find('.grid').find('.cell').find('img').then((list) => 
-     Cypress._.map(list, (o) => Cypress._.pick(o, 'src')),
-     ).should('deep.include', {src: userData.randomImageFashion})
+
+    // cy.url().should('contain', '/')
+    // cy.visit("/my-galleries");
+    // cy.url().should('contain', '/my-galleries')
+    // cy.get('h1').then((el) => {
+    //   expect(el).contain('My Galleries')
+  //})
     
  })
   it("Remove new added image", () => {
@@ -81,8 +79,10 @@ describe("Create test", () => {
   })
 
   it("Move down added image", () => {
+    
+
     createPage.arrowDownImage(userData.randomName, 'd,d,', userData.randomImageFashion, userData.randomImageAbstract)
-    cy.wait(1500);
+
 
     cy.url().should('contain', '/Create')
     cy.get('input').eq(2).should('be.visible').invoke('val').should('not.be.empty', 'userData.randomImageAbstract');

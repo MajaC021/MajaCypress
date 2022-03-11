@@ -1,23 +1,24 @@
 /// <reference types="cypress" />
 describe("login test", () => {
-    it("visit gallery page", () => {
-      cy.visit("/");
+    it("visit login page", () => {
+      cy.visit("/login");
     });
   
-    it('click on the login button', () => {
-      cy.visit("/");
-      // jos jedan nacin za get-ovanje elementa
-      // cy.get('a[href="/login"]').click();
-      cy.get('.nav-link').eq(1).click();
-      cy.get('#email').type('majacveticanin90@gmail.com');
-      cy.get('#password').type('jjjj');
-      cy.get('button').click();
+    it.only('click on the login button', () => {
+      cy.intercept({method: "POST",
+      url: "https://gallery-api.vivifyideas.com/api/auth/login",
+      }).as('loginRequest')
+      cy.loginFromBackend("majacveticanin90@gmail.com", "Majovita1990");
+      cy.wait('@loginRequest').then((interceptObj) => {
+        console.log('OBJ', interceptObj)
+        expect(interceptObj.response.statusCode).eq(200)
+      })
 
-      cy.get('p').should('have.text', 'Bad Credentials')
-      .and('have.css', 'color', 'rgb(114, 28, 36)')
-      .and('have.css', 'border-color', 'rgb(245, 198, 203)')
+      // cy.get('p').should('have.text', 'Bad Credentials')
+      // .and('have.css', 'color', 'rgb(114, 28, 36)')
+      // .and('have.css', 'border-color', 'rgb(245, 198, 203)')
     });
-    xit('logout', () => {
+    it('logout', () => {
 
       // logout
       cy.get('.nav-link').should('have.length', 3);

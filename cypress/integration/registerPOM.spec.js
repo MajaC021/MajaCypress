@@ -11,7 +11,6 @@ describe("Registration test", () => {
   }
 
   beforeEach("visit Register page", () => {
-    cy.wait(5000)
     cy.visit("/Register");
     cy.url().should('contain', '/Register')
   });
@@ -33,7 +32,7 @@ describe("Registration test", () => {
     })
   })
 
-  it.only("Create user with email has already been taken.", () => {
+  it("Create user with email has already been taken.", () => {
     registerPage.registerUserInvalidEmail(userData.randomName, userData.randomName, "majac@gmail.com", userData.randomPassword, userData.randomPassword)
 
     cy.url().should('contain', '/Register');
@@ -78,7 +77,7 @@ describe("Registration test", () => {
     })
   })
 
-  it.only("Create user with unequal password and password-confirmation", () => {
+  it("Create user with unequal password and password-confirmation", () => {
     registerPage.registerUserWithoutPasswordAndPassConfirmation(userData.randomName, userData.randomName, userData.randomEmail, '123456789', '12345678')
 
     cy.url().should('contain', '/Register');
@@ -87,7 +86,7 @@ describe("Registration test", () => {
     .and('have.css', 'border-color', 'rgb(245, 198, 203)')
   })
 
-  it.only("Create user with invalid password", () => {
+  it("Create user with invalid password", () => {
     registerPage.registerUserWithoutPasswordAndPassConfirmation(userData.randomName, userData.randomName, userData.randomEmail, '1234', '12345678')
 
     cy.url().should('contain', '/Register');
@@ -104,7 +103,7 @@ describe("Registration test", () => {
     })
   })
 
-  it.only("Create user without Accepted terms and conditions", () => {
+  it("Create user without Accepted terms and conditions", () => {
     registerPage.registerUserWithoutTermsConditions(userData.randomName, userData.randomName, userData.randomEmail, userData.randomPassword, userData.randomPassword)
     cy.url().should('contain', '/Register');
     cy.get('.alert-danger').should('include.text', 'The terms and conditions must be accepted.')
@@ -117,9 +116,18 @@ describe("Registration test", () => {
     cy.get('.alert-danger').should('include.text', 'The terms and conditions must be accepted.')
   })
 
-  it("Create user with valid data", () => {
+  it.only("Create user with valid data", () => {
+    
+    cy.intercept({
+      method: "POST",
+      url: "https://gallery-api.vivifyideas.com/api/auth/register"
+    }).as('registerRequest')
     registerPage.registerValid(userData.randomName, userData.randomName, userData.randomEmail, userData.randomPassword, userData.randomPassword)
-
+cy.wait('@registerRequest').then((intercept) => {
+console.log(intercept)
+expect(intercept.request.body.email).eq(userData.randomEmail)
+expect(intercept.response.statusCode).eq(200)
+})
     cy.get('.nav-link').should('have.length', 4);
     cy.get('.nav-link').eq(2).click();
   })
